@@ -17,7 +17,19 @@
  * @package WooCommerce_Performance_Improvements
  * @author  Luke Cavanagh
  */
- 
+
+/**
+ * Declaring compatibility for WooCommerce HPOS
+ */
+add_action(
+	'before_woocommerce_init',
+	function () {
+		if ( class_exists( FeaturesUtil::class) ) {
+			FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
+	}
+);
+
 // Remove order total from my account orders
 add_filter('woocommerce_my_account_my_orders_columns', 'remove_my_account_order_total', 10);
 
@@ -34,7 +46,7 @@ function disable_woocommerce_status_remove_dashboard_widgets() {
 	remove_meta_box( 'woocommerce_dashboard_status', 'dashboard', 'normal');
 }
 add_action('wp_dashboard_setup', 'disable_woocommerce_status_remove_dashboard_widgets', 40);
- 
+
 // Disable reviews dashboard widget
 function disable_woocommerce_reviews_remove_dashboard_widgets() {
 	remove_meta_box( 'woocommerce_dashboard_recent_reviews', 'dashboard', 'normal');
@@ -42,7 +54,7 @@ function disable_woocommerce_reviews_remove_dashboard_widgets() {
 add_action('wp_dashboard_setup', 'disable_woocommerce_reviews_remove_dashboard_widgets', 40);
 
 // Hide tags, featured and type admin columns from the product list
-function unset_some_columns_in_product_list( $column_headers ) { 
+function unset_some_columns_in_product_list( $column_headers ) {
         unset($column_headers['product_tag']);
         unset($column_headers['featured']);
         unset($column_headers['product_type']);
