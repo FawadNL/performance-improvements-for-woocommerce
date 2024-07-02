@@ -18,6 +18,8 @@
  * @author  Luke Cavanagh
  */
 
+use Automattic\WooCommerce\Utilities\FeaturesUtil;
+
 /**
  * Declaring compatibility for WooCommerce HPOS
  */
